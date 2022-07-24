@@ -1,4 +1,4 @@
-package com.blog.ishara.blogweb;
+package com.blog.blogweb;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;

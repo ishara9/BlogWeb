@@ -47,7 +47,8 @@ public class Post implements Serializable
   @ManyToOne(cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
   private Author author;
 
-  @OneToMany(cascade=CascadeType.PERSIST)
+  @OneToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH,
+      CascadeType.PERSIST }, fetch = FetchType.EAGER)
   private final List<Comment> comments = new ArrayList<>();
 
   protected Post(){}
@@ -79,5 +80,60 @@ public class Post implements Serializable
   {
     comments.add(comment);
     return this;
+  }
+
+  public Long getId()
+  {
+    return id;
+  }
+
+  public String getTitle()
+  {
+    return title;
+  }
+
+  public String getBody()
+  {
+    return body;
+  }
+
+  public Date getCreatedOn()
+  {
+    return createdOn;
+  }
+
+  public Date getModifiedOn()
+  {
+    return modifiedOn;
+  }
+
+  public void setId(Long id)
+  {
+    this.id = id;
+  }
+
+  public void setTitle(String title)
+  {
+    this.title = title;
+  }
+
+  public void setBody(String body)
+  {
+    this.body = body;
+  }
+
+  public void setCreatedOn(Date createdOn)
+  {
+    this.createdOn = createdOn;
+  }
+
+  public void setModifiedOn(Date modifiedOn)
+  {
+    this.modifiedOn = modifiedOn;
+  }
+
+  public void setAuthor(Author author)
+  {
+    this.author = author;
   }
 }

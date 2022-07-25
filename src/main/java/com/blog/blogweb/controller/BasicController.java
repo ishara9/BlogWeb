@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.blog.blogweb.PostService;
 import com.blog.blogweb.data.PostRepository;
-import com.blog.blogweb.model.Author;
 import com.blog.blogweb.model.Post;
+import com.blog.blogweb.service.api.PostService;
 
 @RestController
 public class BasicController
@@ -32,15 +31,6 @@ public class BasicController
   public String index()
   {
     return "Greetings!";
-  }
-
-  @GetMapping("/post2")
-  public ResponseEntity<String> postMessage()
-  {
-    postRepository.save(new Post("new message", "hello!", new Author("J.J. Rollin")));
-    Optional<Post> postOptional = postRepository.findById(1L);
-    Post post = postOptional.orElseThrow(() -> new IllegalArgumentException("No such id exists"));
-    return new ResponseEntity<>(String.format("Post: %s, PostBean: %s",post, postService.postMessage()), HttpStatus.OK);
   }
 
   @GetMapping("/posts2")
@@ -76,8 +66,8 @@ public class BasicController
     {
       Optional<Post> postOptional = postRepository.findById(1L);
       Post post = postOptional.orElseThrow(() -> new IllegalArgumentException("No such id exists"));
-      return new ResponseEntity<>(post.getComments().stream().map(Objects::toString).collect(Collectors.joining(","))
-          , HttpStatus.OK);
+      return new ResponseEntity<>(post.getComments().stream().map(Objects::toString).collect(Collectors.joining(",")),
+          HttpStatus.OK);
 
     }
     catch (IllegalArgumentException iEx)

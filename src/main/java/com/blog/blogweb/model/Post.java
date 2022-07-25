@@ -1,5 +1,6 @@
 package com.blog.blogweb.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * “id” : number
  * “title” : String
@@ -22,18 +25,23 @@ import javax.persistence.OneToMany;
  * “modifiedOn” : TimeStamp
  */
 @Entity
-public class Post
+public class Post implements Serializable
 {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
+  @JsonProperty("id")
   private Long id;
 
+  @JsonProperty("title")
   private String title;
 
+  @JsonProperty("body")
   private String body;
 
+  @JsonProperty("createdOn")
   private Date createdOn;
 
+  @JsonProperty("modifiedOn")
   private Date modifiedOn;
 
   @ManyToOne(cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)

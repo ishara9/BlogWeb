@@ -11,10 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.blog.blogweb.PostService;
 import com.blog.blogweb.data.PostRepository;
 import com.blog.blogweb.model.Author;
 import com.blog.blogweb.model.Post;
@@ -22,6 +21,9 @@ import com.blog.blogweb.model.Post;
 @RestController
 public class BasicController
 {
+
+  @Resource
+  PostService postService;
 
   @Resource
   PostRepository postRepository;
@@ -32,16 +34,16 @@ public class BasicController
     return "Greetings!";
   }
 
-  @GetMapping("/post")
+  @GetMapping("/post2")
   public ResponseEntity<String> postMessage()
   {
     postRepository.save(new Post("new message", "hello!", new Author("J.J. Rollin")));
     Optional<Post> postOptional = postRepository.findById(1L);
     Post post = postOptional.orElseThrow(() -> new IllegalArgumentException("No such id exists"));
-    return new ResponseEntity<>(String.format("Post: %s", post.toString()), HttpStatus.OK);
+    return new ResponseEntity<>(String.format("Post: %s, PostBean: %s",post, postService.postMessage()), HttpStatus.OK);
   }
 
-  @GetMapping("/posts")
+  @GetMapping("/posts2")
   public ResponseEntity<String> getPostMessages()
   {
 
@@ -51,7 +53,7 @@ public class BasicController
     return new ResponseEntity<>(String.format("Post: %s", postString), HttpStatus.OK);
   }
 
-  @RequestMapping(value = "/post/{id}", method = RequestMethod.GET)
+  @GetMapping("/post2/{id}")
   public ResponseEntity<Post> getPostById(@PathVariable Long id)
   {
     try
@@ -67,7 +69,7 @@ public class BasicController
     }
   }
 
-  @RequestMapping(value ="/post/{id}/comments", method = RequestMethod.GET)
+  @GetMapping("/post2/{id}/comments")
   public ResponseEntity<String> getPostComments(@PathVariable Long id)
   {
     try

@@ -6,8 +6,10 @@ import org.springframework.context.annotation.Configuration;
 import com.blog.blogweb.mapper.AuthorMapper;
 import com.blog.blogweb.mapper.CommentMapper;
 import com.blog.blogweb.mapper.PostMapper;
+import com.blog.blogweb.service.api.AuthorService;
 import com.blog.blogweb.service.api.CommentService;
 import com.blog.blogweb.service.api.PostService;
+import com.blog.blogweb.service.impl.AuthorServiceImpl;
 import com.blog.blogweb.service.impl.CommentServiceImpl;
 import com.blog.blogweb.service.impl.PostServiceImpl;
 
@@ -42,5 +44,11 @@ public class BeanConfiguration
   public CommentMapper getCommentMapper()
   {
     return new CommentMapper();
+  }
+
+  @Bean
+  public AuthorService getAuthorService()
+  {
+    return new AuthorServiceImpl();
   }
 }
